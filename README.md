@@ -2,7 +2,7 @@
 
 **One SDK. Any AI Provider. Complete Usage Tracking.**
 
-CmdrData SDK is a universal Python library that wraps ANY AI client (OpenAI, Anthropic, Google, Cohere, etc.) to automatically track usage for billing, analytics, and cost management - with zero code changes required.
+CmdrData SDK is a universal Python library that wraps ANY AI client (OpenAI, Anthropic, Google, Cohere, etc.) to automatically track usage for billing, analytics (including custom/ad-hoc metrics), and cost management - with zero code changes required.
 
 This is the official Python SDK for [CmdrData](https://www.cmdrdata.ai), the Google Analytics of AI Usage Tracking.
 
