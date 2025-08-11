@@ -1,0 +1,166 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cmdrdata"
+version = "0.1.0"
+description = "Universal AI usage tracking SDK - works with any AI provider with arbitrary metadata support"
+readme = "README.md"
+license = {file = "LICENSE"}
+authors = [
+    {name = "cmdrdata", email = "terencenathan@gmail.com"}
+]
+maintainers = [
+    {name = "cmdrdata", email = "terencenathan@gmail.com"}
+]
+keywords = [
+    "ai",
+    "tracking", 
+    "usage",
+    "billing",
+    "analytics",
+    "metadata",
+    "openai",
+    "anthropic",
+    "google",
+    "gemini",
+    "claude",
+    "gpt",
+    "llm",
+    "sdk",
+    "wrapper",
+    "universal"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "httpx>=0.24.0",
+    "typing-extensions>=4.0.0; python_version<'3.10'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.10.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.0.0",
+    "build>=1.0.0",
+    "twine>=4.0.0",
+]
+test = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0", 
+    "pytest-mock>=3.10.0",
+]
+openai = ["openai>=1.0.0"]
+anthropic = ["anthropic>=0.18.0"]
+google = ["google-generativeai>=0.3.0"]
+cohere = ["cohere>=4.0.0"]
+all = [
+    "openai>=1.0.0",
+    "anthropic>=0.18.0",
+    "google-generativeai>=0.3.0", 
+    "cohere>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://www.cmdrdata.ai"
+Documentation = "https://github.com/cmdrdata-ai/cmdrdata#readme"
+Repository = "https://github.com/cmdrdata-ai/cmdrdata"
+Issues = "https://github.com/cmdrdata-ai/cmdrdata/issues"
+Changelog = "https://github.com/cmdrdata-ai/cmdrdata/releases"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cmdrdata*"]
+
+[tool.setuptools.package-data]
+cmdrdata = ["py.typed"]
+
+[tool.black]
+line-length = 88
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+disallow_untyped_decorators = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_equality = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "--strict-markers --strict-config --verbose"
+markers = [
+    "asyncio: marks tests as async tests",
+    "integration: marks tests as integration tests",
+    "unit: marks tests as unit tests",
+]
+asyncio_mode = "auto"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3.5",
+    "pytest-asyncio>=0.21.0",
+    "pytest-mock>=3.10.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.0.0",
+    "pre-commit>=3.5.0",
+    "build>=1.2.2.post1",
+    "twine>=6.1.0",
+    "hypothesis>=6.137.2",
+]
