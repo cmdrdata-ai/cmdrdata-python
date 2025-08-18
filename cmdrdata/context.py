@@ -4,7 +4,7 @@ Context management for customer IDs and metadata
 
 import threading
 from contextlib import contextmanager
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Generator, Optional
 
 # Thread-local storage for context
 _context = threading.local()
@@ -13,7 +13,7 @@ _context = threading.local()
 def set_customer_context(customer_id: str) -> None:
     """
     Set the customer ID for the current thread context.
-    
+
     Args:
         customer_id: Customer identifier to set
     """
@@ -23,7 +23,7 @@ def set_customer_context(customer_id: str) -> None:
 def get_customer_context() -> Optional[str]:
     """
     Get the current customer ID from thread context.
-    
+
     Returns:
         Current customer ID or None
     """
@@ -39,13 +39,13 @@ def clear_customer_context() -> None:
 
 
 @contextmanager
-def customer_context(customer_id: str):
+def customer_context(customer_id: str) -> Generator[None, None, None]:
     """
     Context manager for temporarily setting customer ID.
-    
+
     Args:
         customer_id: Customer identifier to use within context
-    
+
     Example:
         with customer_context("customer-123"):
             # All API calls here will use customer-123
@@ -65,7 +65,7 @@ def customer_context(customer_id: str):
 def set_metadata_context(metadata: Dict[str, Any]) -> None:
     """
     Set metadata for the current thread context.
-    
+
     Args:
         metadata: Metadata dictionary to set
     """
@@ -75,7 +75,7 @@ def set_metadata_context(metadata: Dict[str, Any]) -> None:
 def get_metadata_context() -> Dict[str, Any]:
     """
     Get the current metadata from thread context.
-    
+
     Returns:
         Current metadata dictionary or empty dict
     """
@@ -93,7 +93,7 @@ def clear_metadata_context() -> None:
 def update_metadata_context(metadata: Dict[str, Any]) -> None:
     """
     Update (merge) metadata in the current thread context.
-    
+
     Args:
         metadata: Metadata to merge with existing context
     """
@@ -103,13 +103,13 @@ def update_metadata_context(metadata: Dict[str, Any]) -> None:
 
 
 @contextmanager
-def metadata_context(metadata: Dict[str, Any]):
+def metadata_context(metadata: Dict[str, Any]) -> Generator[None, None, None]:
     """
     Context manager for temporarily setting metadata.
-    
+
     Args:
         metadata: Metadata to use within context
-    
+
     Example:
         with metadata_context({"feature": "chat", "experiment": "v2"}):
             # All API calls here will include this metadata

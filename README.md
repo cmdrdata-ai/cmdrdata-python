@@ -255,34 +255,22 @@ CmdrData works with any AI provider that returns usage information. Tested with:
 - **Perplexity**: pplx-api models
 - **Custom**: Any client that returns token usage
 
-## Migration Guide
 
-### From Individual SDKs
-If you're using cmdrdata-openai, cmdrdata-anthropic, or cmdrdata-gemini:
+## Testing
 
-```python
-# Old way (provider-specific SDKs)
-from cmdrdata_openai import TrackedOpenAI
-from cmdrdata_anthropic import TrackedAnthropic
+### Run the Test Suite
+```bash
+# Run unit tests
+python -m pytest tests/
 
-# New way (universal SDK)
-from cmdrdata import track_ai
-openai_client = track_ai(OpenAI())
-anthropic_client = track_ai(Anthropic())
-```
-
-### From Direct Clients
-Zero changes to your application code:
-
-```python
-# Your existing code
-client = OpenAI(api_key="...")
-response = client.chat.completions.create(...)
-
-# Just wrap the client - everything else stays the same
-from cmdrdata import track_ai
-client = track_ai(OpenAI(api_key="..."), cmdrdata_api_key="cmd-...")
-response = client.chat.completions.create(...)  # Now with tracking!
+# Test with real AI providers
+# 1. Copy .env.example to .env and add your API keys
+cp .env.example .env
+# 2. Edit .env with your actual API keys
+# 3. Run the integration test
+bash run_integration_test.sh
+# Or directly with Python:
+uv run python test_real_providers.py
 ```
 
 ## Configuration
