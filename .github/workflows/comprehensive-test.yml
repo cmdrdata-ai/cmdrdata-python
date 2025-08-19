@@ -80,60 +80,8 @@ jobs:
     
     - name: Run property-based tests
       run: |
-        cat << 'EOF' > test_hypothesis.py
-        import hypothesis.strategies as st
-        from hypothesis import given, settings, assume
-        from cmdrdata import CmdrData
-        
-        # Test customer ID validation
-        @given(st.text())
-        @settings(max_examples=100)
-        def test_customer_id_validation(customer_id):
-            """Test that any string customer ID is handled properly"""
-            try:
-                # Should handle any string without crashing
-                client = CmdrData(
-                    client=None,
-                    cmdrdata_api_key="test-key",
-                    customer_id=customer_id
-                )
-                assert client.customer_id == customer_id
-            except ValueError:
-                # Should only fail for truly invalid inputs
-                assert customer_id == "" or customer_id is None
-        
-        # Test metadata validation
-        @given(st.dictionaries(st.text(), st.one_of(
-            st.text(), st.integers(), st.floats(), st.booleans(), st.none()
-        )))
-        @settings(max_examples=100)
-        def test_metadata_validation(metadata):
-            """Test that any metadata dictionary is handled properly"""
-            client = CmdrData(
-                client=None,
-                cmdrdata_api_key="test-key",
-                metadata=metadata
-            )
-            assert client.metadata == metadata
-        
-        # Test token counting edge cases
-        @given(
-            prompt_tokens=st.integers(min_value=0, max_value=1000000),
-            completion_tokens=st.integers(min_value=0, max_value=1000000)
-        )
-        def test_token_counting(prompt_tokens, completion_tokens):
-            """Test token counting doesn't overflow or produce invalid results"""
-            total = prompt_tokens + completion_tokens
-            assert total >= 0
-            assert total == prompt_tokens + completion_tokens
-        
-        if __name__ == "__main__":
-            import sys
-            import pytest
-            sys.exit(pytest.main([__file__, "-v"]))
-        EOF
-        
-        uv run python test_hypothesis.py
+        # Run hypothesis tests from the test suite
+        uv run pytest tests/test_comprehensive.py::TestHypothesis -v --tb=short
 
   mutation-tests:
     name: Mutation Testing
