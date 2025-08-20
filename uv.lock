@@ -382,6 +382,7 @@ dev = [
     { name = "pytest-cov" },
     { name = "pytest-mock" },
     { name = "python-dotenv" },
+    { name = "requests" },
     { name = "twine" },
     { name = "types-requests" },
 ]
@@ -435,6 +436,7 @@ dev = [
     { name = "pytest-cov", specifier = ">=4.0.0" },
     { name = "pytest-mock", specifier = ">=3.10.0" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
+    { name = "requests", specifier = ">=2.32.4" },
     { name = "twine", specifier = ">=6.1.0" },
     { name = "types-requests", specifier = ">=2.31.0" },
 ]
