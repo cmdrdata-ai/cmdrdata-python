@@ -41,7 +41,11 @@ class TestE2EProviders:
                 client=client,
                 cmdrdata_api_key=os.getenv("CMDRDATA_API_KEY", "test-key"),
                 customer_id=customer_id,
-                metadata={"test_run": self.test_run_id, "provider": provider_name, "ci": True},
+                metadata={
+                    "test_run": self.test_run_id,
+                    "provider": provider_name,
+                    "ci": True,
+                },
             )
 
             # Make minimal API call based on provider
@@ -69,7 +73,8 @@ class TestE2EProviders:
             elif provider_name == "Cohere":
                 if hasattr(wrapped, "chat"):
                     response = wrapped.chat(
-                        model="command-r", messages=[{"role": "user", "content": "Reply with 'OK'"}]
+                        model="command-r",
+                        messages=[{"role": "user", "content": "Reply with 'OK'"}],
                     )
                 else:
                     response = wrapped.generate(
@@ -154,7 +159,9 @@ class TestE2EProviders:
         # Check if any providers failed
         failed = [r for r in self.results if r["status"] == "error"]
         if failed:
-            pytest.fail(f"Failed providers: {', '.join([r['provider'] for r in failed])}")
+            pytest.fail(
+                f"Failed providers: {', '.join([r['provider'] for r in failed])}"
+            )
 
     def _print_summary(self):
         """Print test summary"""

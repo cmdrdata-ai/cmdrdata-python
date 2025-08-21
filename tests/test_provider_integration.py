@@ -38,14 +38,18 @@ class TestProviderIntegration:
 
         # Make a minimal API call
         response = wrapped_client.chat.completions.create(
-            model="gpt-3.5-turbo", messages=[{"role": "user", "content": "Say 'OK'"}], max_tokens=5
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": "Say 'OK'"}],
+            max_tokens=5,
         )
 
         assert response.choices[0].message.content
         assert response.usage.total_tokens > 0
         print(f"[OK] OpenAI: {response.usage.total_tokens} tokens used")
 
-    @pytest.mark.skipif(not os.getenv("ANTHROPIC_API_KEY"), reason="No Anthropic API key")
+    @pytest.mark.skipif(
+        not os.getenv("ANTHROPIC_API_KEY"), reason="No Anthropic API key"
+    )
     def test_anthropic_integration(self):
         """Test Anthropic SDK integration"""
         from anthropic import Anthropic
@@ -136,10 +140,11 @@ class TestProviderIntegration:
                 model="command-r", messages=[{"role": "user", "content": "Say 'OK'"}]
             )
         else:
-            response = wrapped_client.generate(prompt="Say 'OK'", model="command", max_tokens=5)
+            response = wrapped_client.generate(
+                prompt="Say 'OK'", model="command", max_tokens=5
+            )
 
         print(f"[OK] Cohere ({'v2' if is_v2 else 'v1'}): Response received")
-
 
 
 if __name__ == "__main__":
