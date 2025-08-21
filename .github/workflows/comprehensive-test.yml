@@ -166,8 +166,8 @@ jobs:
       uses: trufflesecurity/trufflehog@main
       with:
         path: ./
-        base: main
-        head: HEAD
+        base: ${{ github.event.pull_request.base.sha || github.event.before || 'main' }}
+        head: ${{ github.event.pull_request.head.sha || github.sha }}
 
   performance-benchmarks:
     name: Performance Benchmarks
@@ -225,7 +225,7 @@ jobs:
   test-summary:
     name: Test Summary
     runs-on: ubuntu-latest
-    needs: [unit-tests, property-based-tests, mutation-tests, integration-tests, playwright-e2e, security-scan, performance-benchmarks]
+    needs: [unit-tests, property-based-tests, mutation-tests, integration-tests, security-scan, performance-benchmarks]
     if: always()
     
     steps:
@@ -236,6 +236,5 @@ jobs:
         echo "Property-Based Tests: ${{ needs.property-based-tests.result }}"
         echo "Mutation Tests: ${{ needs.mutation-tests.result }}"
         echo "Integration Tests: ${{ needs.integration-tests.result }}"
-        echo "E2E Tests: ${{ needs.playwright-e2e.result }}"
         echo "Security Scan: ${{ needs.security-scan.result }}"
         echo "Performance: ${{ needs.performance-benchmarks.result }}"
