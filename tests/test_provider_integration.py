@@ -7,9 +7,10 @@ They are designed to run in CI/CD with real API keys when available.
 
 import os
 import sys
-import pytest
 from datetime import datetime
 from unittest.mock import Mock
+
+import pytest
 
 from cmdrdata import CmdrData
 
